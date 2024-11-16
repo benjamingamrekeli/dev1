@@ -14,6 +14,23 @@ app.set("port", 3000);
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended:true}));
 
+//returns een QR-code image voor instance om in te loggen
+app.post("/login"), (req,res) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      authorization: `Bearer ${customer.bearerToken}`
+    }
+  };
+  
+  fetch('https://gate.whapi.cloud/users/login', options)
+    .then(res => res.json())
+    .then(res => console.log(res))
+    .catch(err => console.error(err));
+}
+
 //bericht versturen
 app.post("/sendMessage"), (req,res) => {
   const message:Message = req.body.message;
@@ -77,6 +94,7 @@ app.delete("/deleteMessage"), (req,res) => {
     .then(res => console.log(res))
     .catch(err => console.error(err));
 }
+
 
 
 /*
